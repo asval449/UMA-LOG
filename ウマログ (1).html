@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ウマログ</title>
+<style>
+:root{--ac:#d32f2f;--bg:#fff;--tx:#222;--ln:#e5e5e5;--mu:#555;--fs:16px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#fff;--tx:#222}}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--tx);font:var(--fs)/1.5 -apple-system,"Hiragino Sans",Meiryo,sans-serif;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+main{max-width:720px;margin:0 auto;padding:12px}
+h1{font-size:1.6em;margin:.2em 0;color:var(--ac)}h2{font-size:1.15em;margin:1em 0 .4em;border-left:5px solid var(--ac);padding-left:8px}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav a{flex:1;text-align:center;padding:8px 0;color:var(--mu);text-decoration:none;font-size:.68em;min-height:56px}nav a b{display:block;font-size:1.5em}nav a.on{color:var(--ac);font-weight:700}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:12px 16px;font-size:1em;min-height:44px;cursor:pointer}.btn.g{background:#eee;color:#222}.btn.d{background:#fff;color:#c00;border:1px solid #c00}.btn.w{width:100%;margin:6px 0}
+.tabs{display:flex;gap:6px;margin:8px 0;flex-wrap:wrap}.tabs button{flex:1;border:1px solid var(--ln);background:#fff;border-radius:20px;padding:9px 10px;font-size:.9em;min-height:40px;white-space:nowrap}.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.card{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--ln);cursor:pointer}
+.no{background:var(--ac);color:#fff;font-weight:700;min-width:46px;height:46px;border-radius:6px;display:flex;align-items:center;justify-content:center}.no.e{background:#ccc}
+.mid{flex:1;min-width:0}.nm{font-weight:700;font-size:1.1em}.sub{color:var(--mu);font-size:.85em;display:flex;gap:10px;flex-wrap:wrap}.ar{color:var(--mu);font-size:1.4em}
+.lb{display:inline-block;font-size:.7em;padding:1px 7px;border-radius:4px;border:1px solid #ccc;margin-left:6px;vertical-align:middle;font-weight:700}
+.c1{background:#1565c0;color:#fff;border-color:#1565c0}.c2{background:#d32f2f;color:#fff;border-color:#d32f2f}.c3{background:#2eaf3a;color:#fff;border-color:#2eaf3a}
+.s-美浦{background:#d32f2f;color:#fff}.s-栗東{background:#1565c0;color:#fff}.s-地方{background:#2e7d32;color:#fff}.s-海外{background:#111;color:#fff}
+.st-出馬確定{background:#d32f2f;color:#fff}.st-登録{background:#1565c0;color:#fff}.st-予定{background:#777;color:#fff}
+table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--ln);padding:8px;text-align:left}th{background:#f6f6f6;width:32%;font-weight:600}
+label{display:block;margin:10px 0 3px;font-weight:600;font-size:.9em}input,select,textarea{width:100%;padding:11px;border:1px solid #bbb;border-radius:8px;font-size:1em;background:#fff;color:#222}
+.err{background:#fdecea;color:#b71c1c;padding:8px;border-radius:6px;margin:8px 0}.mu{color:var(--mu)}.row{display:flex;gap:8px}.row>*{flex:1}
+.demo{background:#fff3cd;font-size:.75em;padding:1px 6px;border-radius:4px}
+.no{background:#c62f35;border-radius:8px;min-width:58px;height:58px;font-size:1.15em}.no.e{background:#ccc}.nm{font-size:1.25em;line-height:1.3}.card{padding:12px 4px;gap:12px}.sub{font-size:.95em;gap:8px;color:#444}.sf{color:#2e8b3d;font-weight:600}.sd{color:#8d5a00}.go{width:40px;height:40px;border:1.5px solid #777;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.75em;color:#333;flex:none}.lb{border:0;border-radius:14px;padding:2px 10px;font-size:.72em}.lg{background:#777;color:#fff}.hn{font-size:1.9em;font-weight:800;margin:.1em 0}.pl{background:#999;color:#fff;border-radius:14px;padding:1px 10px;font-size:.8em}.memo{background:#f2f2f2;border-radius:8px;padding:14px;color:#999;display:flex;justify-content:space-between;margin:14px 0 6px;font-size:1.1em;cursor:pointer}.pt{border-top:1px solid #ccc}.pt th{width:27%;text-align:center;color:#444;background:#e8e8e8;font-weight:400;border:0;border-bottom:1px solid #fff;padding:16px 6px}.pt td{border:0;border-bottom:1px solid #ddd;font-weight:700;color:#0d47a1;font-size:1.1em}.pt .f th{background:#639fdc;color:#fff;font-weight:700}.pt .f td{background:#cfe0f0}.pt .m th{background:#d1768b;color:#fff;font-weight:700}.pt .m td{background:#f3dde2}.pt td.pl2{color:#222;font-weight:400}.st{font-size:.85em}.st th{width:auto;cursor:pointer;background:#f6f6f6;padding:8px 3px;text-align:center;font-weight:600;white-space:nowrap}.st td{padding:9px 3px;text-align:center}.st td.en{text-align:left;font-weight:800;color:#0d47a1;font-size:1.05em}.st td.wn{font-weight:800;width:40px;font-size:1.05em}
+.pl.s-美浦,.lb.s-美浦{background:#d32f2f;color:#fff}.pl.s-栗東,.lb.s-栗東{background:#1565c0;color:#fff}.pl.s-地方,.lb.s-地方{background:#2e7d32;color:#fff}.pl.s-海外,.lb.s-海外{background:#111;color:#fff}
+.mc{border:1px solid #ddd;border-radius:6px;padding:16px;margin:12px 0;cursor:pointer}.mn{font-size:1.5em;font-weight:800}.mn .lb{font-size:.55em}.md{color:#444;margin-top:6px}.bar{background:#eaeaea;border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;margin:8px 0}.tabs button{border-radius:24px}
+.ban{background:#f2f2f2;border-radius:8px;padding:14px;text-align:center;font-weight:800;font-size:1.2em;margin:8px 0}.rk{display:inline-block;min-width:32px;text-align:center;border:1px solid #bbb;background:#e6e6e6;font-weight:700;padding:0 6px;margin-right:6px}.rk1{background:#ffe94d;border-color:#d9c300}.rk2{background:#cdeaf9;border-color:#6ab}.rk3{background:#fad4d4;border-color:#d88}
+details{border:1px solid var(--ln);border-radius:8px;padding:10px;margin:8px 0}summary{font-weight:700;cursor:pointer}
+</style></head><body><main id="app"></main><nav id="nav"></nav>
+<script>
+const $=s=>document.querySelector(s);
+const G1=['GⅠ','JpnⅠ'],G2=['GⅡ','JpnⅡ'],G3=['GⅢ','JpnⅢ'];
+const JRA=['東京','中山','阪神','京都','函館','札幌','福島','新潟','中京','小倉'];
+const LOC=['門別','盛岡','水沢','浦和','船橋','大井','川崎','金沢','笠松','名古屋','園田','姫路','高知','佐賀'];
+const CLS={jra:['GⅠ','GⅡ','GⅢ','オープン','3勝クラス','2勝クラス','1勝クラス','未勝利','新馬','その他'],loc:['GⅠ','JpnⅠ','JpnⅡ','JpnⅢ','その他'],ovs:['GⅠ','GⅡ','GⅢ','その他']};
+const CATN={jra:'中央競馬',loc:'地方競馬',ovs:'海外競馬'};
+const DIVS=['美浦','栗東','地方','海外'];
+let S={races:[],horses:[],stables:[],meets:[],wv:{},venues:[],set:{color:'#d32f2f',size:'標準'}};
+let V={cat:'jra',venue:'東京',date:today(),div:'',stable:'',q:'',id:null,pre:{},err:''};
+function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+/* storage: IndexedDB with fallback */
+let db=null;
+function openDB(){return new Promise(r=>{try{const q=indexedDB.open('umalog',1);q.onupgradeneeded=()=>q.result.createObjectStore('kv');q.onsuccess=()=>{db=q.result;r()};q.onerror=()=>r()}catch(e){r()}})}
+function load(){return new Promise(r=>{if(!db){try{r(JSON.parse(localStorage.getItem('umalog')))}catch(e){r(null)}return}const q=db.transaction('kv').objectStore('kv').get('s');q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)})}
+function save(){if(db){try{db.transaction('kv','readwrite').objectStore('kv').put(S,'s')}catch(e){}}else{try{localStorage.setItem('umalog',JSON.stringify(S))}catch(e){}}}
+function yen(n){n=+n||0;if(!n)return '0円';const o=Math.floor(n/1e8),m=Math.floor(n%1e8/1e4),e=n%1e4;return (o?o+'億':'')+(m?m.toLocaleString()+'万':'')+(e?e.toLocaleString():'')+'円'}
+function clsLb(c){const k=G1.includes(c)?'c1':G2.includes(c)?'c2':G3.includes(c)?'c3':'';if(!k){const s={'3勝クラス':'3勝','2勝クラス':'2勝','1勝クラス':'1勝'}[c];return s?`<span class="lb lg">${s}</span>`:''}return `<span class="lb ${k}">${esc(c)}</span>`}
+function wd(d){return d?d.replace(/-/g,'/'):''}
+const stName=id=>(S.stables.find(s=>s.id===id)||{}).name||'未設定';
+/* routing */
+const NAV=[['home','🏠','ホーム'],['races','🏇','レース'],['horses','🐴','注目馬'],['stables','🏠','厩舎'],['settings','⚙️','設定']];
+const BASE={entryform:'races',raceform:'races',race:'races',meetform:'races',horse:'horses',horseform:'horses',resultform:'horses',resultview:'horses',stable:'stables',stableform:'stables'};
+function go(v,id,pre){V.id=id??null;V.pre=pre||{};V.err='';location.hash=v}
+function view(){return location.hash.slice(1)||'home'}
+function render(){
+ const v=view(),b=BASE[v]||v;
+ document.documentElement.style.setProperty('--ac',S.set.color);
+ document.documentElement.style.setProperty('--fs',{小:'14px',標準:'16px',大:'19px'}[S.set.size]);
+ $('#nav').innerHTML=NAV.map(n=>`<a href="#${n[0]}" class="${n[0]===b?'on':''}"><b>${n[1]}</b>${n[2]}</a>`).join('');
+ const f={home,races,race:raceDetail,raceform,meetform,entryform,horses,stables,resultform,resultview,horse:horseDetail,horseform,stable:stableDetail,stableform,settings}[v]||home;
+ $('#app').innerHTML=f();window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',render);
+const E=()=>V.err?`<div class="err">${esc(V.err)}</div>`:'';
+/* home */
+function weekEnd(){const d=new Date();d.setDate(d.getDate()+(7-d.getDay())%7);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function raceCard(r){return `<div class="card" onclick="go('race','${r.id}')"><div class="no">${r.cat==='jra'?r.no+'R':esc(r.no)+'R'}</div><div class="mid"><div class="nm">${esc(r.name)}${clsLb(r.cls)}</div><div class="sub">${view()==='home'||V.pf?`<span>${V.rm==='past'?wd(r.date):wd(r.date).slice(5)} ${esc(r.venue)}</span>`:''}<span>${esc(r.time||'')}</span><span class="${r.surf==='芝'?'sf':r.surf==='ダート'?'sd':''}">${r.surf==='ダート'?'ダ':esc(r.surf)}${r.dist}m</span><span>${r.heads}頭</span>${r.memo?'<span>📝</span>':''}</div></div><div class="go">▼</div></div>`}
+function home0(){
+ const t=today(),e=weekEnd(),gr=S.races.filter(r=>r.date>=t&&r.date<=e&&[...G1,...G2,...G3].includes(r.cls)).sort((a,b)=>a.date.localeCompare(b.date)||a.time?.localeCompare(b.time||''));
+ return `<h1>ウマログ</h1><p><b>ウマログへようこそ！</b><br>競馬をもっと楽しく。愛馬の記録を、あなたの手の中に。</p><p class="mu">ウマログは、競馬のレース情報やお気に入りの注目馬を自由に記録・管理できるアプリです。気になる馬の情報を残して、自分だけの競馬データベースを作りましょう！</p>
+ <h2>今週の重賞</h2>${gr.length?gr.map(raceCard).join(''):'<p class="mu">今週の重賞は登録されていません</p>'}
+ <button class="btn w" onclick="go('raceform')">＋ レースを登録</button>`}
+/* races */
+function venues(){return V.cat==='jra'?JRA:V.cat==='loc'?LOC:S.venues}
+const DW='日月火水木金土';
+function mainCard(r){const d=new Date(r.date+'T00:00:00');return `<div class="mc" onclick="go('race','${r.id}')"><div class="mn">${esc(r.name)}${clsLb(r.cls)}</div><div class="md">${d.getMonth()+1}月${d.getDate()}日(${DW[d.getDay()]}) ${esc(r.venue)} ${r.no}R ${esc(r.surf)}${r.dist}m</div></div>`}
+function home(){const t=today(),e=weekEnd(),gr=S.races.filter(r=>r.main&&r.date>=t&&r.date<=e).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||''));
+ return `<h1>ウマログ</h1><p><b>ウマログへようこそ！</b></p><p class="mu">ウマログは、競馬のレース情報やお気に入りの注目馬を自由に記録・管理できるアプリです。気になる馬の情報を残して、自分だけの競馬データベースを作りましょう！</p>
+ <div style="display:flex;align-items:center;justify-content:space-between;margin-top:18px"><b style="font-size:1.5em">今週の注目レース</b><button class="btn g" style="border-radius:20px;padding:8px 18px" onclick="go('races')">もっと見る</button></div>
+ ${gr.length?gr.map(mainCard).join(''):'<p class="mu">今週のメインレースは登録されていません</p>'}
+ <h2 style="margin-top:22px">今週のレース</h2>${weekRaces().length?grouped(weekRaces()):'<p class="mu">今週のレースは登録されていません</p>'}
+ <button class="btn w" onclick="go('raceform')">＋ レースを登録</button>`}
+function held(){return [...new Set([...S.meets,...S.races].filter(x=>x.cat===V.cat&&x.date===V.date).map(x=>x.venue))]}
+function weekRange(){const f=x=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0'),d=new Date(),a=new Date(d),b=new Date(d);a.setDate(d.getDate()-(d.getDay()+6)%7);b.setDate(a.getDate()+6);return [f(a),f(b)]}
+const rsort=(x,y)=>x.date.localeCompare(y.date)||x.venue.localeCompare(y.venue,'ja')||x.no-y.no;
+function weekRaces(){const [a,b]=weekRange();return S.races.filter(r=>r.date>=a&&r.date<=b).sort(rsort)}
+function grouped(l){let d='',o='';l.forEach(r=>{if(r.date!==d){d=r.date;o+=`<h2>${wd(d)}(${DW[new Date(d+'T00:00:00').getDay()]})</h2>`}o+=raceCard(r)});return o}
+function rmTabs(){const m=V.rm||'week';return `<div class="tabs">${[['week','今週'],['past','過去のレース'],['day','開催日別']].map(a=>`<button class="${m===a[0]?'on':''}" onclick="V.rm='${a[0]}';render()">${a[1]}</button>`).join('')}</div>`}
+const fmt=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+function addDays(t,n){const d=new Date(t+'T00:00:00');d.setDate(d.getDate()+n);return fmt(d)}
+function wkStart(t){const d=new Date(t+'T00:00:00');d.setDate(d.getDate()-(d.getDay()+6)%7);return fmt(d)}
+function gwv(ws){const w=S.wv&&S.wv[ws];if(w)return w;return [...new Set([...S.meets,...S.races].filter(x=>x.cat==='jra'&&x.date>=ws&&x.date<=addDays(ws,6)).map(x=>x.venue))].slice(0,3)}
+function togV(v){const ws=V.wk||wkStart(today());let l=[...gwv(ws)];if(l.includes(v))l=l.filter(x=>x!==v);else{if(l.length>=3){alert('開催競馬場は最大3場までです');return}l.push(v)}S.wv=S.wv||{};S.wv[ws]=l;if(!l.includes(V.venue))V.venue=l[0]||'';save();render()}
+function ensureV(cat,date,venue){V.cat=cat;V.date=date;V.venue=venue;V.wd=date;V.wk=wkStart(date);if(cat==='jra'){S.wv=S.wv||{};const l=S.wv[V.wk];if(l&&!l.includes(venue)&&l.length<3)l.push(venue)}}
+function races(){const ws=V.wk||wkStart(today()),we=addDays(ws,6),cur=ws===wkStart(today()),md=t=>t.slice(5).replace('-','/');
+ let body='';
+ if(V.cat==='jra'){const vs=gwv(ws),days=[...new Set([...S.races,...S.meets].filter(x=>x.cat==='jra'&&x.date>=ws&&x.date<=we).map(x=>x.date))].sort();
+  if(!days.includes(V.wd))V.wd=days.includes(today())?today():(days[0]||'');if(!vs.includes(V.venue))V.venue=vs[0]||'';
+  const list=S.races.filter(r=>r.cat==='jra'&&r.venue===V.venue&&r.date===V.wd),mt=S.meets.find(x=>x.cat==='jra'&&x.date===V.wd&&x.venue===V.venue);
+  body=`<h2>開催競馬場（最大3場）</h2><div class="tabs">${vs.map(v=>`<button class="${v===V.venue?'on':''}" onclick="V.venue='${esc(v)}';render()">${esc(v)}</button>`).join('')}<button style="flex:0 0 auto" onclick="V.vsel=!V.vsel;render()">${V.vsel?'閉じる':'選ぶ'}</button></div>
+  ${V.vsel?`<div class="tabs">${JRA.map(v=>`<button class="${vs.includes(v)?'on':''}" style="flex:0 0 auto" onclick="togV('${v}')">${v}</button>`).join('')}</div><p class="mu" style="font-size:.85em">タップで選択・解除（最大3場）</p>`:''}
+  ${days.length?`<div class="tabs">${days.map(d=>`<button class="${d===V.wd?'on':''}" onclick="V.wd='${d}';render()">${DW[new Date(d+'T00:00:00').getDay()]}曜 ${md(d)}</button>`).join('')}</div>`:'<p class="mu">この週に登録されたレースはありません</p>'}
+  ${V.venue&&V.wd?`<div class="bar"><span>${esc(mt&&mt.info?mt.info:'開催情報なし')}</span><button class="btn g" style="min-height:34px;padding:4px 14px" onclick="go('meetform',${mt?`'${mt.id}'`:'null'},{cat:'jra',date:'${V.wd}',venue:'${V.venue}'})">${mt?'編集':'設定'}</button></div>${Array.from({length:12},(_,i)=>{const r=list.find(x=>+x.no===i+1);return r?raceCard(r):`<div class="card" onclick="go('raceform',null,{cat:'jra',venue:'${V.venue}',date:'${V.wd}',no:${i+1}})"><div class="no e">${i+1}R</div><div class="mid mu">未登録（タップして登録）</div><div class="go">＋</div></div>`}).join('')}`:(vs.length?'':'<p class="mu">「選ぶ」から開催競馬場を選んでください</p>')}
+  <button class="btn g w" onclick="go('raceform',null,{cat:'jra',venue:'${V.venue}',date:'${V.wd||ws}'})">＋ レース登録（日付は登録画面で変更）</button>`}
+ else{const w=S.races.filter(r=>r.cat===V.cat&&r.date>=ws&&r.date<=we).sort(rsort);V.pf=true;const g=w.length?grouped(w):'<p class="mu">この週に登録されたレースはありません</p>';V.pf=false;
+  body=g+`<button class="btn w" onclick="go('raceform',null,{cat:'${V.cat}',date:'${ws}'})">＋ レース登録</button>`}
+ return `<h1>レース</h1><div class="tabs">${Object.keys(CATN).map(k=>`<button class="${k===V.cat?'on':''}" onclick="V.cat='${k}';render()">${CATN[k]}</button>`).join('')}</div>
+ <div class="bar"><button class="btn g" style="min-height:38px;padding:4px 12px" onclick="V.wk=addDays('${ws}',-7);render()">‹ 前週</button><div style="text-align:center"><b>${cur?'今週':md(ws)+'〜'+md(we)}</b>${cur?`<div class="mu" style="font-size:.8em">${md(ws)}〜${md(we)}</div>`:''}</div><button class="btn g" style="min-height:38px;padding:4px 12px" onclick="V.wk=addDays('${ws}',7);render()">次週 ›</button></div>
+ <label>カレンダーで週を選ぶ（過去にさかのぼれます）</label><input type="date" value="${ws}" onchange="if(this.value){V.wk=wkStart(this.value);render()}">${cur?'':'<button class="btn g w" onclick="V.wk=null;render()">今週に戻る</button>'}
+ ${body}`}
+function races1(){const m=V.rm||'week';
+ if(m==='day')return racesDay().replace('<h1>レース</h1>','<h1>レース</h1>'+rmTabs());
+ if(m==='past'){const t=today(),q=(V.rq||'').trim(),l=S.races.filter(r=>r.date<t&&(!V.rg||[...G1,...G2,...G3].includes(r.cls))&&(!q||(r.name+r.venue).includes(q))).sort((x,y)=>-rsort(x,y));
+  return `<h1>レース</h1>${rmTabs()}<div class="tabs"><button class="${V.rg?'on':''}" onclick="V.rg=!V.rg;render()">重賞のみ</button></div><input placeholder="レース名・競馬場で検索" value="${esc(V.rq||'')}" oninput="V.rq=this.value;const p=this.selectionStart;render();const i=$('#app input');i.focus();i.setSelectionRange(p,p)">${l.length?grouped(l):'<p class="mu">過去のレースはありません</p>'}`}
+ const w=weekRaces(),[a,b]=weekRange();
+ return `<h1>レース</h1>${rmTabs()}<p class="mu" style="font-size:.9em">今週（${a.slice(5).replace('-','/')}〜${b.slice(5).replace('-','/')}）のレース</p>${w.length?grouped(w):'<p class="mu">今週のレースは登録されていません</p>'}<button class="btn w" onclick="go('raceform')">＋ レースを登録</button>`}
+function racesDay(){const hv=held();if(!hv.includes(V.venue))V.venue=hv[0]||'';
+ const list=S.races.filter(r=>r.cat===V.cat&&r.venue===V.venue&&r.date===V.date),mt=S.meets.find(x=>x.cat===V.cat&&x.date===V.date&&x.venue===V.venue);let body='';
+ if(V.venue){if(V.cat==='jra')body=Array.from({length:12},(_,i)=>{const r=list.find(x=>+x.no===i+1);return r?raceCard(r):`<div class="card" onclick="go('raceform',null,{cat:'jra',venue:'${V.venue}',date:'${V.date}',no:${i+1}})"><div class="no e">${i+1}R</div><div class="mid mu">未登録（タップして登録）</div><div class="go">＋</div></div>`}).join('');
+ else body=(list.sort((a,b)=>a.no-b.no).map(raceCard).join('')||'<p class="mu">レースが登録されていません</p>')+`<button class="btn w" onclick="go('raceform',null,{cat:'${V.cat}',venue:'${V.venue}',date:'${V.date}'})">＋ レース登録</button>`}
+ return `<h1>レース</h1><div class="tabs">${Object.keys(CATN).map(k=>`<button class="${k===V.cat?'on':''}" onclick="V.cat='${k}';render()">${CATN[k]}</button>`).join('')}</div>
+ <label>開催日</label><input type="date" value="${V.date}" onchange="V.date=this.value;render()">
+ ${hv.length?`<div class="tabs" style="margin-top:12px">${hv.map(v=>`<button class="${v===V.venue?'on':''}" onclick="V.venue='${esc(v)}';render()">${esc(v)}</button>`).join('')}</div>
+ <div class="bar"><span>${esc(mt&&mt.info?mt.info:'開催情報なし')}</span><button class="btn g" style="min-height:34px;padding:4px 14px" onclick="go('meetform',${mt?`'${mt.id}'`:'null'},{cat:V.cat,date:V.date,venue:V.venue})">${mt?'編集':'設定'}</button></div>`:'<p class="mu">この日の開催場所が設定されていません</p>'}
+ ${body}<button class="btn g w" onclick="go('meetform',null,{cat:'${V.cat}',date:'${V.date}'})">＋ 開催場所を設定</button>`}
+function meetform(){const m=S.meets.find(x=>x.id===V.id)||V.pre||{},ed=!!m.id,cat=m.cat||V.cat,vs=cat==='jra'?JRA:cat==='loc'?LOC:null;
+ return `<h1>${ed?'開催場所の編集':'開催場所の設定'}</h1>${E()}<form onsubmit="return saveMeet(event,'${m.id||''}','${cat}')"><p class="mu">${CATN[cat]}</p>
+ <label>開催日 *</label><input type="date" name="date" value="${m.date||V.date}">
+ <label>競馬場 *</label>${vs?`<select name="venue">${opts(vs,m.venue||V.venue)}</select>`:`<input name="venue" list="vl" value="${esc(m.venue||'')}"><datalist id="vl">${S.venues.map(v=>`<option>${esc(v)}`).join('')}</datalist>`}
+ <label>開催情報（回・日目・天気など）</label><input name="info" value="${esc(m.info||'')}" placeholder="例：5回7日目 曇一時雨">
+ <button class="btn w">${ed?'保存':'設定'}</button><button type="button" class="btn g w" onclick="history.back()">キャンセル</button>${ed?`<button type="button" class="btn d w" onclick="delMeet('${m.id}')">開催設定を削除</button>`:''}</form>`}
+function saveMeet(ev,id,cat){ev.preventDefault();const o=fd(ev.target);o.venue=(o.venue||'').trim();o.info=(o.info||'').trim();
+ if(!o.date||!o.venue){V.err='開催日と競馬場を入力してください';V.pre={...o,cat};render();return false}
+ if(cat==='ovs'&&!S.venues.includes(o.venue))S.venues.push(o.venue);
+ const dup=S.meets.find(x=>x.cat===cat&&x.date===o.date&&x.venue===o.venue&&x.id!==id);
+ if(dup){dup.info=o.info;if(id)S.meets=S.meets.filter(x=>x.id!==id)}else if(id)Object.assign(S.meets.find(x=>x.id===id),o);else S.meets.push({id:uid(),cat,...o});
+ ensureV(cat,o.date,o.venue);V.err='';V.pre={};save();history.back();return false}
+function delMeet(id){if(confirm('この開催設定を削除しますか？（登録済みのレースは残ります）')){S.meets=S.meets.filter(x=>x.id!==id);save();location.hash='races'}}
+function hm(){return `<div class="tabs">${[['horse','注目馬'],['stable','厩舎']].map(a=>`<button class="${(V.hm||'horse')===a[0]?'on':''}" onclick="V.hm='${a[0]}';render()">${a[1]}</button>`).join('')}</div>`}
+function stables(){const l=S.stables.filter(s=>!V.div||s.div===V.div).sort((a,b)=>a.name.localeCompare(b.name,'ja'));
+ return `<h1>厩舎</h1><div class="tabs"><button class="${!V.div?'on':''}" onclick="V.div='';render()">全て</button>${DIVS.map(d=>`<button class="${V.div===d?'on':''}" onclick="V.div='${d}';render()">${d}</button>`).join('')}</div>
+ ${l.length?l.map(s=>`<div class="card" onclick="go('stable','${s.id}')"><div class="mid"><div class="nm">${esc(s.name)}</div><div class="sub"><span class="pl s-${s.div}">${s.div}</span><span>${S.horses.filter(h=>h.stable===s.id).length}頭</span></div></div><div class="go">›</div></div>`).join(''):'<p class="mu">厩舎が登録されていません</p>'}
+ <button class="btn w" onclick="go('stableform',null,{div:V.div||'美浦'})">＋ 厩舎を登録</button>`}
+function stableDetail(){const s=S.stables.find(x=>x.id===V.id);if(!s){location.hash='stables';return ''}
+ const asc=V.asc!==false,l=S.horses.filter(h=>h.stable===s.id).sort((a,b)=>(asc?a.age-b.age:b.age-a.age)||a.name.localeCompare(b.name,'ja'));
+ return `<div class="hn">${esc(s.name)}</div><div class="sub"><span class="pl s-${s.div}">${s.div}</span><span>${l.length}頭</span></div>
+ <div class="tabs"><button class="${asc?'on':''}" onclick="V.asc=true;render()">年齢 若い順</button><button class="${asc?'':'on'}" onclick="V.asc=false;render()">年齢 高い順</button></div>
+ ${l.length?l.map(h=>`<div class="card" onclick="go('horse','${h.id}')"><div class="mid"><div class="nm">${esc(h.name)}</div><div class="sub"><b style="color:#222">${h.sex}${h.age}歳</b>${h.att!==false?'<span class="lb c1" style="margin:0">注目</span>':''}<span>${esc(h.sire||'')}</span></div></div><div class="go">›</div></div>`).join(''):'<p class="mu">この厩舎の馬はいません</p>'}
+ <button class="btn w" onclick="go('horseform',null,{div:'${s.div}',stable:'${s.id}',att:false})">＋ この厩舎に馬を登録</button><button class="btn g w" onclick="go('stableform','${s.id}')">厩舎を編集</button><button class="btn g w" onclick="history.back()">戻る</button>`}
+function stableform(){const s=S.stables.find(x=>x.id===V.id)||V.pre||{},ed=!!s.id;
+ return `<h1>${ed?'厩舎編集':'厩舎登録'}</h1>${E()}<form onsubmit="return saveStable(event,'${s.id||''}')"><label>厩舎名 *</label><input name="name" value="${esc(s.name||'')}"><label>所属場所</label><select name="div">${opts(DIVS,s.div||'美浦')}</select>
+ <button class="btn w">${ed?'保存':'登録'}</button><button type="button" class="btn g w" onclick="history.back()">キャンセル</button>${ed?`<button type="button" class="btn d w" onclick="delStable2('${s.id}')">削除</button>`:''}</form>`}
+function saveStable(ev,id){ev.preventDefault();const o=fd(ev.target);o.name=o.name.trim();if(!o.name){V.err='厩舎名を入力してください';V.pre=o;render();return false}
+ if(id){Object.assign(S.stables.find(x=>x.id===id),o);S.horses.forEach(h=>{if(h.stable===id)h.div=o.div})}else S.stables.push({id:uid(),...o});
+ V.err='';V.pre={};save();history.back();return false}
+function delStable2(id){const c=S.horses.filter(h=>h.stable===id).length;if(!confirm(c?`この厩舎には${c}頭の注目馬が登録されています。削除しますか？（馬の厩舎は「未設定」になります）`:'この厩舎を削除しますか？'))return;S.horses.forEach(h=>{if(h.stable===id)h.stable=''});S.stables=S.stables.filter(x=>x.id!==id);save();location.hash='stables'}
+function races0(){
+ if(!venues().includes(V.venue))V.venue=venues()[0]||'';
+ const list=S.races.filter(r=>r.cat===V.cat&&r.venue===V.venue&&r.date===V.date);
+ let body='';
+ if(V.cat==='jra'){body=Array.from({length:12},(_,i)=>{const r=list.find(x=>+x.no===i+1);return r?raceCard(r):`<div class="card" onclick="go('raceform',null,{cat:'jra',venue:'${V.venue}',date:'${V.date}',no:${i+1}})"><div class="no e">${i+1}R</div><div class="mid mu">未登録（タップして登録）</div><div class="ar">＋</div></div>`}).join('')}
+ else body=(list.sort((a,b)=>a.no-b.no).map(raceCard).join('')||'<p class="mu">レースが登録されていません</p>')+`<button class="btn w" onclick="go('raceform',null,{cat:'${V.cat}',venue:'${V.venue}',date:'${V.date}'})">＋ レース登録</button>`;
+ return `<h1>レース</h1><div class="tabs">${Object.keys(CATN).map(k=>`<button class="${k===V.cat?'on':''}" onclick="V.cat='${k}';render()">${CATN[k]}</button>`).join('')}</div>
+ ${V.cat==='ovs'?`<div class="row"><input id="nv" placeholder="競馬場名を入力"><button class="btn" style="flex:0 0 90px" onclick="addVenue()">追加</button></div>`:''}
+ <div class="tabs">${venues().map(v=>`<button class="${v===V.venue?'on':''}" style="flex:0 0 auto" onclick="V.venue='${esc(v)}';render()">${esc(v)}</button>`).join('')}</div>
+ <label>開催日</label><input type="date" value="${V.date}" onchange="V.date=this.value;render()">${body}`}
+function addVenue(){const n=$('#nv').value.trim();if(!n)return;if(!S.venues.includes(n))S.venues.push(n);V.venue=n;save();render()}
+const GC=c=>G1.includes(c)?'#1b4fc5':G2.includes(c)?'#d32f2f':G3.includes(c)?'#2eaf3a':'var(--ac)';
+const WK=['#fff','#222','#e53935','#1e56b8','#f2cc2c','#2e9e47','#f28c1e','#ef7fa8'],WT=['#222','#fff','#fff','#fff','#222','#fff','#222','#222'];
+function wakuOf(N){const f=Math.min(N,8),m=[];if(!f)return m;const c=Array(f).fill(Math.floor(N/f));for(let i=0;i<N%f;i++)c[f-1-i]++;c.forEach((k,i)=>{for(let j=0;j<k;j++)m.push(i+1)});return m}
+function sortBy(k){if((V.sk||'no')===k)V.sd=-(V.sd||1);else{V.sk=k;V.sd=1}render()}
+function raceDetail(){const r=S.races.find(x=>x.id===V.id);if(!r){location.hash='races';return ''}
+ const en=r.entries||[],N=Math.max(+r.heads||0,en.length),wk=wakuOf(N),k=V.sk||'no',d=V.sd||1,SX=['牡','牝','セン'];
+ const val=e=>k==='sa'?e.age:e[k];
+ const srt=[...en].sort((a,b)=>{let x=val(a),y=val(b);if(x===''||x==null)return 1;if(y===''||y==null)return -1;const c=typeof x==='number'?x-y:String(x).localeCompare(String(y),'ja');return (c||(k==='sa'?SX.indexOf(a.sex)-SX.indexOf(b.sex):0)||a.no-b.no)*d});
+ const th=(key,t,l)=>`<th ${l?'style="text-align:left"':''} onclick="sortBy('${key}')">${t}${k===key?(d>0?'▲':'▼'):'<span style="color:#bbb">⇅</span>'}</th>`;
+ return `<div style="display:flex;gap:12px;align-items:center"><div class="no" style="background:${GC(r.cls)};min-width:64px;height:64px;font-size:1.4em">${r.no}R</div><div class="mid"><div>${clsLb(r.cls).replace('class="lb','style="margin:0" class="lb')}</div><div class="hn" style="font-size:1.7em;margin:0">${esc(r.name)}</div><div class="sub" style="color:#111;font-size:1.05em"><span>${esc(r.time||'')}</span><span class="${r.surf==='芝'?'sf':r.surf==='ダート'?'sd':''}">${r.surf==='ダート'?'ダ':esc(r.surf)}${r.dist}m</span><span>${N}頭</span></div></div></div>
+ <hr style="border:0;border-top:1px solid var(--ln);margin:12px 0"><div style="font-size:1.1em;color:#111;font-weight:600">${esc(r.cls)} ${esc(r.wt)}<br>${wd(r.date)} ${esc(r.venue)}</div>
+ ${r.memo?`<h2>回顧メモ</h2><div style="white-space:pre-wrap">${esc(r.memo)}</div>`:''}<h2>出馬表</h2>${en.length?`<div style="overflow-x:auto"><table class="st"><tr>${th('no','番号')}${th('name','馬名',1)}${th('sa','性齢')}${th('jockey','騎手')}${th('wt','斤量')}${th('bw','馬体重')}</tr>${srt.map(e=>{const f=wk[e.no-1]||wk[wk.length-1]||1;return `<tr onclick="go('entryform','${r.id}',{eid:'${e.id}'})"><td class="wn" style="background:${WK[f-1]};color:${WT[f-1]}">${e.no}</td><td class="en">${esc(e.name)}</td><td>${esc(e.sex)}${e.age||''}</td><td>${esc(e.jockey||'')}</td><td>${e.wt?e.wt+'kg':''}</td><td>${e.bw?e.bw+'kg':''}</td></tr>`}).join('')}</table></div><p class="mu" style="font-size:.8em">行をタップで編集。見出しをタップで並べ替え。</p>`:'<p class="mu">出走馬が登録されていません</p>'}
+ <button class="btn w" onclick="go('entryform','${r.id}')">＋ 出走馬を登録</button><button class="btn g w" onclick="go('raceform','${r.id}')">レースを編集</button><button class="btn g w" onclick="history.back()">戻る</button>`}
+function entryform(){const r=S.races.find(x=>x.id===V.id);if(!r){location.hash='races';return ''}
+ const eid=V.pre.eid||'',ex=(r.entries||[]).find(x=>x.id===eid),e=ex||V.pre,ed=!!ex;
+ return `<h1>${ed?'出走馬の編集':'出走馬の登録'}</h1><p class="mu">${esc(r.name)}</p>${E()}<form onsubmit="return saveEntry(event,'${eid}')">
+ <label>番号 *</label><input name="no" type="number" min="1" value="${e.no||(r.entries||[]).length+1}">
+ <label>馬名 *</label><input name="name" value="${esc(e.name||'')}">
+ <div class="row"><div><label>性別</label><select name="sex">${opts(['牡','牝','セン'],e.sex)}</select></div><div><label>年齢</label><input name="age" type="number" min="2" value="${e.age||''}"></div></div>
+ <label>騎手</label><input name="jockey" value="${esc(e.jockey||'')}">
+ <div class="row"><div><label>斤量(kg)</label><input name="wt" type="number" step="0.5" value="${e.wt||''}"></div><div><label>馬体重(kg)</label><input name="bw" type="number" value="${e.bw||''}"></div></div>
+ <button class="btn w">${ed?'保存':'登録'}</button><button type="button" class="btn g w" onclick="history.back()">キャンセル</button>${ed?`<button type="button" class="btn d w" onclick="delEntry('${eid}')">削除</button>`:''}</form>`}
+function saveEntry(ev,eid){ev.preventDefault();const r=S.races.find(x=>x.id===V.id),o=fd(ev.target);o.name=o.name.trim();r.entries=r.entries||[];const m=[];
+ if(!(+o.no>0))m.push('番号');if(!o.name)m.push('馬名');
+ if(m.length){V.err=m.join('・')+'を入力してください';V.pre={...o,eid};render();return false}
+ if(r.entries.some(x=>+x.no===+o.no&&x.id!==eid)){V.err='その番号は既に登録されています';V.pre={...o,eid};render();return false}
+ o.no=+o.no;o.age=o.age?+o.age:'';o.wt=o.wt?+o.wt:'';o.bw=o.bw?+o.bw:'';
+ if(eid)Object.assign(r.entries.find(x=>x.id===eid),o);else r.entries.push({id:uid(),...o});
+ V.err='';V.pre={};save();history.back();return false}
+function delEntry(eid){if(confirm('この出走馬を削除しますか？')){const r=S.races.find(x=>x.id===V.id);r.entries=r.entries.filter(x=>x.id!==eid);save();history.back()}}
+function raceDetail0(){
+ const r=S.races.find(x=>x.id===V.id);if(!r){location.hash='races';return ''}
+ return `<h1>${esc(r.name)}${clsLb(r.cls)}</h1><table>${[['開催日',wd(r.date)],['競馬場',`${esc(r.venue)} ${r.no}R`],['発走時刻',esc(r.time||'-')],['馬場・距離',esc(r.surf)+r.dist+'m'],['斤量条件',esc(r.wt)],['出走頭数',r.heads+'頭']].map(a=>`<tr><th>${a[0]}</th><td>${a[1]}</td></tr>`).join('')}</table>
+ <button class="btn w" onclick="go('raceform','${r.id}')">編集</button><button class="btn g w" onclick="history.back()">戻る</button>`}
+function opts(a,v){return a.map(x=>`<option ${x===v?'selected':''}>${esc(x)}</option>`).join('')}
+function raceform(){
+ const r=S.races.find(x=>x.id===V.id)||{...V.pre},ed=!!r.id,cat=r.cat||'jra';
+ const vs=cat==='jra'?JRA:cat==='loc'?LOC:S.venues;
+ return `<h1>${ed?'レース編集':'レース登録'}</h1>${E()}<form onsubmit="return saveRace(event,'${r.id||''}')">
+ <label>開催区分</label><select name="cat" onchange="V.pre={...fd(this.form),cat:this.value,venue:''};render()" ${ed?'disabled':''}>${Object.keys(CATN).map(k=>`<option value="${k}" ${k===cat?'selected':''}>${CATN[k]}</option>`).join('')}</select>
+ <label>競馬場 *</label>${cat==='ovs'?`<input name="venue" value="${esc(r.venue||'')}" list="vl" placeholder="例：シャティン"><datalist id="vl">${S.venues.map(v=>`<option>${esc(v)}`).join('')}</datalist>`:`<select name="venue">${opts(vs,r.venue)}</select>`}
+ <label>レース番号 *</label>${cat==='jra'?`<select name="no">${opts(Array.from({length:12},(_,i)=>i+1),+r.no||1)}</select>`:`<input name="no" type="number" min="1" value="${r.no||''}">`}
+ <label>開催日 *</label><input type="date" name="date" value="${r.date||V.date}">
+ <label>発走時刻</label><input type="time" name="time" value="${r.time||''}">
+ <label>レース名 *</label><input name="name" value="${esc(r.name||'')}">
+ <label>クラス</label><select name="cls">${opts(CLS[cat],r.cls)}</select>
+ <div class="row"><div><label>馬場</label><select name="surf">${opts(['芝','ダート','障害'],r.surf)}</select></div><div><label>距離(m) *</label><input name="dist" type="number" step="100" value="${r.dist||''}"></div></div>
+ <label>斤量条件</label><select name="wt">${opts(['定量','ハンデ','別定','馬齢'],r.wt)}</select>
+ <label>出走頭数</label><select name="heads">${opts(Array.from({length:cat==='ovs'?26:14},(_,i)=>i+5),+r.heads||16)}</select>
+ <label style="display:flex;gap:10px;align-items:center"><input type="checkbox" name="main" style="width:24px;height:24px" ${r.main?'checked':''}>メインレース（ホームに表示）</label>
+ <label>回顧メモ（レースの振り返り）</label><textarea name="memo" rows="4">${esc(r.memo||'')}</textarea>
+ <button class="btn w">${ed?'保存':'登録'}</button><button type="button" class="btn g w" onclick="history.back()">キャンセル</button>
+ ${ed?`<button type="button" class="btn d w" onclick="delRace('${r.id}')">削除</button>`:''}</form>`}
+function fd(f){return Object.fromEntries(new FormData(f))}
+function saveRace(ev,id){ev.preventDefault();const o=fd(ev.target);
+ if(!id)o.cat=V.pre.cat||ev.target.cat.value;else o.cat=S.races.find(x=>x.id===id).cat;
+ o.venue=(o.venue||'').trim();o.name=(o.name||'').trim();o.main=!!o.main;
+ const m=[];if(!o.venue)m.push('競馬場');if(!o.no)m.push('レース番号');if(!o.date)m.push('開催日');if(!o.name)m.push('レース名');if(!(+o.dist>0))m.push('距離');
+ if(m.length){V.err=m.join('・')+'を入力してください';V.pre=o;render();return false}
+ if(o.cat==='ovs'&&!S.venues.includes(o.venue))S.venues.push(o.venue);
+ if(id)Object.assign(S.races.find(x=>x.id===id),o);else S.races.push({id:uid(),...o});
+ ensureV(o.cat,o.date,o.venue);V.err='';save();history.back();return false}
+function delRace(id){if(confirm('このレースを削除しますか？')){S.races=S.races.filter(x=>x.id!==id);save();V.id=null;location.hash='races'}}
+/* horses */
+const ALLC=[...new Set([...CLS.jra,...CLS.loc,...CLS.ovs])];
+function clsX(c){return c?(clsLb(c)||`<span class="lb lg" style="background:#999">${esc(c)}</span>`):''}
+function nextPicker(){const up=S.races.filter(r=>r.date>=today()).sort((a,b)=>a.date.localeCompare(b.date)||String(a.venue).localeCompare(b.venue,'ja')||a.no-b.no);
+ return `<label>レースから選ぶ</label><select onchange="pickNext(this.value)"><option value="">選択しない（手入力）</option>${up.map(r=>`<option value="${r.id}">${wd(r.date).slice(5)} ${esc(r.venue)} ${r.no}R ${esc(r.name)}</option>`).join('')}${up.length?'':'<option disabled>登録されたレースがありません</option>'}</select>`}
+function pickNext(id){const r=S.races.find(x=>x.id===id);if(!r)return;const f=document.querySelector('#app form'),set=(n,v)=>{const e=f.elements[n];if(e)e.value=v==null?'':v};
+ set('n_name',r.name);set('n_place',r.venue);set('n_surf',r.surf);set('n_dist',r.dist);set('n_cls',r.cls);set('n_rid',r.id);set('n_date',r.date)}
+function prevList(h){const all=[...(h.prevs||[])].sort((a,b)=>(b.date||'').localeCompare(a.date||'')),full=V.allp===h.id,l=full?all:all.slice(0,5);
+ return (all.length?`<div class="mu" style="font-size:.85em">${full?'全'+all.length:'近'+l.length}走</div>`:'')+(l.length?l.map(p=>`<div class="card" onclick="V.vr='${p.id}';go('resultview','${h.id}')"><div class="mid"><div class="nm">${esc(p.name)}${clsX(p.cls)}</div><div class="sub" style="font-size:1em"><span>${wd(p.date)}</span><span>${esc(p.place||'')}</span><span class="${p.surf==='芝'?'sf':p.surf==='ダート'?'sd':''}">${esc(p.surf||'')}${p.dist||''}m</span></div><div class="sub">${p.weather?`<span>天候 ${esc(p.weather)}</span>`:''}${p.going?`<span>馬場 ${esc(p.going)}</span>`:''}${p.memo?'<span>📝メモあり</span>':''}</div></div><div><span class="rk rk${p.rank}">${p.rank}</span>着</div></div>`).join(''):'<p class="mu">前走情報なし</p>')
+ +(all.length>5?`<button class="btn g w" onclick="V.allp=${full?'null':`'${h.id}'`};render()">${full?'近5走のみ表示':`すべて表示（${all.length}走）`}</button>`:'')+`<button class="btn g w" onclick="go('resultform','${h.id}')">＋ 前走成績を追加</button>`}
+function resultview(){const h=S.horses.find(x=>x.id===V.id),p=h&&(h.prevs||[]).find(x=>x.id===V.vr);if(!p){location.hash='horses';return ''}
+ const row=(a,b)=>`<tr><th>${a}</th><td>${b}</td></tr>`;
+ return `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div class="hn" style="font-size:1.4em;margin:0">${esc(p.name)}${clsX(p.cls)}</div><button class="btn g" style="min-height:40px;padding:6px 20px;flex:none" onclick="go('resultform','${h.id}',{rid:'${p.id}'})">編集</button></div>
+ <div class="mu">${esc(h.name)}</div>
+ <table style="margin-top:10px">${row('開催日',wd(p.date))}${row('開催場所',esc(p.place||'-'))}${row('馬場・距離',esc(p.surf||'')+(p.dist||'')+'m')}${row('天候',esc(p.weather||'-'))}${row('馬場状態',esc(p.going||'-'))}${row('着順',p.rank+'着')}</table>
+ <h2>レースメモ</h2><div style="white-space:pre-wrap;min-height:3em">${p.memo?esc(p.memo):'<span class="mu">メモはありません。右上の編集から追加できます。</span>'}</div>
+ <button class="btn g w" style="margin-top:16px" onclick="history.back()">戻る</button>`}
+function resultform(){const h=S.horses.find(x=>x.id===V.id);if(!h){location.hash='horses';return ''}
+ const rid=V.pre.rid||'',ex=(h.prevs||[]).find(x=>x.id===rid),p=ex||V.pre,ed=!!ex,pl=[...JRA,...LOC,...S.venues];
+ return `<h1>${ed?'前走成績の編集':'前走成績の追加'}</h1><p class="mu">${esc(h.name)}</p>${E()}<form onsubmit="return saveResult(event,'${rid}')"><datalist id="pl">${pl.map(x=>`<option>${esc(x)}`).join('')}</datalist>
+ <label>開催日 *</label><input type="date" name="date" value="${p.date||today()}">
+ <label>レース名 *</label><input name="name" value="${esc(p.name||'')}">
+ <label>開催場所</label><input name="place" list="pl" value="${esc(p.place||'')}">
+ <div class="row"><div><label>馬場</label><select name="surf">${opts(['芝','ダート','障害'],p.surf)}</select></div><div><label>距離(m)</label><input name="dist" type="number" step="100" value="${p.dist||''}"></div></div>
+ <div class="row"><div><label>天候</label><select name="weather"><option value="">-</option>${opts(['晴れ','曇り','小雨','雨','雪'],p.weather)}</select></div><div><label>馬場状態</label><select name="going"><option value="">-</option>${opts(['良','稍重','重','不良'],p.going)}</select></div></div>
+ <label>クラス</label><select name="cls"><option value="">-</option>${opts(ALLC,p.cls)}</select>
+ <label>着順 *</label><input name="rank" type="number" min="1" value="${p.rank||''}">
+ <label>レースメモ</label><textarea name="memo" rows="5">${esc(p.memo||'')}</textarea>
+ <button class="btn w">${ed?'保存':'登録'}</button><button type="button" class="btn g w" onclick="history.back()">キャンセル</button>${ed?`<button type="button" class="btn d w" onclick="delResult('${rid}')">削除</button>`:''}</form>`}
+function saveResult(ev,rid){ev.preventDefault();const h=S.horses.find(x=>x.id===V.id),o=fd(ev.target);o.name=o.name.trim();h.prevs=h.prevs||[];const m=[];
+ if(!o.date)m.push('開催日');if(!o.name)m.push('レース名');if(!(+o.rank>0))m.push('着順');
+ if(m.length){V.err=m.join('・')+'を入力してください';V.pre={...o,rid};render();return false}
+ o.rank=+o.rank;o.dist=o.dist?+o.dist:'';
+ if(rid)Object.assign(h.prevs.find(x=>x.id===rid),o);else h.prevs.push({id:uid(),...o});
+ V.err='';V.pre={};save();history.back();return false}
+function delResult(rid){if(confirm('この前走成績を削除しますか？')){const h=S.horses.find(x=>x.id===V.id);h.prevs=h.prevs.filter(x=>x.id!==rid);save();history.go(-2)}}
+function horses(){
+ const sts=S.stables.filter(s=>!V.div||s.div===V.div).sort((a,b)=>a.name.localeCompare(b.name,'ja'));
+ const l=S.horses.filter(h=>h.att!==false&&(!V.div||h.div===V.div)&&(!V.stable||h.stable===V.stable)&&(!V.q||h.name.includes(V.q)));
+ return `<h1>注目馬</h1><div class="tabs"><button class="${!V.div?'on':''}" onclick="V.div='';V.stable='';render()">全て</button>${DIVS.map(d=>`<button class="${V.div===d?'on':''}" onclick="V.div='${d}';V.stable='';render()">${d}</button>`).join('')}</div>
+ ${V.div?`<div class="tabs">${sts.map(s=>`<button style="flex:0 0 auto" class="${V.stable===s.id?'on':''}" onclick="V.stable=V.stable==='${s.id}'?'':'${s.id}';render()">${esc(s.name)}</button>`).join('')}</div>
+ `:''}
+ <input placeholder="注目馬名で検索" value="${esc(V.q)}" style="margin-top:8px" oninput="V.q=this.value;const p=this.selectionStart;render();const i=$('#app input');i.focus();i.setSelectionRange(p,p)">
+ ${l.length?l.sort((a,b)=>a.name.localeCompare(b.name,'ja')).map(h=>`<div class="card" onclick="go('horse','${h.id}')"><div class="mid"><div class="nm">${esc(h.name)}</div><div class="sub"><span class="lb s-${h.div}" style="margin:0">${h.div}</span><span>${esc(stName(h.stable))}</span><span>${h.sex}${h.age}歳</span></div></div><div class="ar">›</div></div>`).join(''):'<p class="mu">注目馬が登録されていません</p>'}
+ <button class="btn w" onclick="go('horseform')">＋ 新規登録</button>`}
+function addStable(){const n=(prompt('厩舎名を入力')||'').trim();if(!n)return;S.stables.push({id:uid(),div:V.div,name:n});save();render()}
+function editStable(){const s=S.stables.find(x=>x.id===V.stable),n=(prompt('厩舎名を編集',s.name)||'').trim();if(!n)return;s.name=n;save();render()}
+function delStable(){const c=S.horses.filter(h=>h.stable===V.stable).length;if(!confirm(c?`この厩舎には${c}頭の注目馬が登録されています。削除しますか？（馬は「未設定」になります）`:'この厩舎を削除しますか？'))return;S.horses.forEach(h=>{if(h.stable===V.stable)h.stable=''});S.stables=S.stables.filter(x=>x.id!==V.stable);V.stable='';save();render()}
+function horseDetail(){
+ const h=S.horses.find(x=>x.id===V.id);if(!h){location.hash='horses';return ''}
+ const n=h.next||{},p=h.prev||{},rc=!!(n.rid&&S.races.find(x=>x.id===n.rid));
+ return `<div class="hn">${esc(h.name)}${h.att!==false?' <span style="color:#f5b301">★</span>':''}</div><div class="sub"><b style="color:#222">${h.sex}${h.age}</b><span class="pl s-${h.div}">${h.div}</span></div><div class="memo" onclick="${h.memo?'const e=this.nextElementSibling;e.hidden=!e.hidden':`go('horseform','${h.id}')`}"><span>メモ${h.memo?'':'を書く'}</span><span>${h.memo?'▾':'＋'}</span></div><div hidden style="white-space:pre-wrap;padding:0 4px 8px">${esc(h.memo||'')}</div>
+ <table class="pt"><tr class="f"><th>父</th><td>${esc(h.sire||'-')}</td></tr><tr class="m"><th>母</th><td>${esc(h.dam||'-')}${h.damsire?`<div style="font-size:.75em;font-weight:400;color:#444">母父: <b style="color:#0d47a1">${esc(h.damsire)}</b></div>`:''}</td></tr><tr><th>馬主</th><td>${esc(h.owner||'-')}</td></tr><tr><th>調教師<br>厩舎</th><td><span class="pl s-${h.div}">${h.div}</span> ${h.stable?`<span style="color:#0d47a1;text-decoration:underline;cursor:pointer" onclick="go('stable','${h.stable}')">${esc(stName(h.stable))} ›</span>`:esc(stName(h.stable))}</td></tr><tr><th>獲得賞金</th><td class="pl2">${yen(h.prize)}</td></tr></table>
+ <h2>次走予定</h2>${n.name?`<div class="ban" ${rc?`onclick="go('race','${n.rid}')" style="cursor:pointer;color:#0d47a1"`:''}>${esc(n.name)}${clsX(n.cls)}${rc?' ›':''}</div><div class="sub" style="justify-content:center"><span class="lb st-${n.status}" style="margin:0">${n.status}</span>${n.date?`<span>${wd(n.date)}</span>`:''}<span>${esc(n.place||'')}</span><span class="${n.surf==='芝'?'sf':n.surf==='ダート'?'sd':''}">${esc(n.surf||'')}${n.dist||''}m</span></div>`:'<div class="ban">次走未定</div>'}
+ <h2>前走成績</h2>${prevList(h)}
+ 
+ <button class="btn w" onclick="go('horseform','${h.id}')">編集</button><button class="btn g w" onclick="history.back()">戻る</button>`}
+function horseform(){
+ const h=S.horses.find(x=>x.id===V.id)||V.pre||{},ed=!!h.id,n=h.next||{},p=h.prev||{},div=h.div||V.div||'美浦';
+ const pl=[...JRA,...LOC,...S.venues];
+ const sl=(nm,a,v)=>`<select name="${nm}">${opts(a,v)}</select>`;
+ return `<h1>${ed?'注目馬編集':'注目馬登録'}</h1>${E()}<form onsubmit="return saveHorse(event,'${h.id||''}')"><datalist id="pl">${pl.map(x=>`<option>${esc(x)}`).join('')}</datalist>
+ <label>注目馬名 *</label><input name="name" value="${esc(h.name||'')}">
+ <label style="display:flex;gap:10px;align-items:center"><input type="checkbox" name="att" style="width:24px;height:24px" ${h.att!==false?'checked':''}>注目馬に表示（外すと厩舎のみに登録）</label>
+ <div class="row"><div><label>性別</label>${sl('sex',['牡','牝','セン'],h.sex)}</div><div><label>年齢 *</label><input name="age" type="number" min="0" value="${h.age||''}"></div></div>
+ <label>所属区分</label><select name="div" onchange="V.pre={...fd(this.form),div:this.value,stable:''};render()">${opts(DIVS,div)}</select>
+ <label>所属厩舎</label><select name="stable"><option value="">未設定</option>${S.stables.filter(s=>s.div===div).sort((a,b)=>a.name.localeCompare(b.name,'ja')).map(s=>`<option value="${s.id}" ${s.id===h.stable?'selected':''}>${esc(s.name)}</option>`).join('')}</select>
+ <label>父</label><input name="sire" value="${esc(h.sire||'')}"><label>母</label><input name="dam" value="${esc(h.dam||'')}"><label>母父</label><input name="damsire" value="${esc(h.damsire||'')}">
+ <label>馬主名</label><input name="owner" value="${esc(h.owner||'')}"><label>獲得賞金（円）</label><input name="prize" type="number" min="0" value="${h.prize||''}">
+ <h2>次走予定</h2>${nextPicker()}<input type="hidden" name="n_rid" value="${esc(n.rid||'')}"><input type="hidden" name="n_date" value="${esc(n.date||'')}"><label>レース名</label><input name="n_name" value="${esc(n.name||'')}"><label>場所</label><input name="n_place" list="pl" value="${esc(n.place||'')}">
+ <div class="row"><div><label>馬場</label>${sl('n_surf',['芝','ダート','障害'],n.surf)}</div><div><label>距離(m)</label><input name="n_dist" type="number" value="${n.dist||''}"></div></div>
+ <label>クラス</label><select name="n_cls"><option value="">-</option>${opts(ALLC,n.cls)}</select><label>出走状況</label>${sl('n_status',['予定','登録','出馬確定'],n.status)}
+ 
+ <h2>メモ</h2><textarea name="memo" rows="6">${esc(h.memo||'')}</textarea>
+ <button class="btn w">${ed?'保存':'登録'}</button><button type="button" class="btn g w" onclick="history.back()">キャンセル</button>${ed?`<button type="button" class="btn d w" onclick="delHorse('${h.id}')">削除</button>`:''}</form>`}
+function saveHorse(ev,id){ev.preventDefault();const o=fd(ev.target);o.name=o.name.trim();o.att=!!o.att;
+ if(!o.name||!(+o.age>=0)||o.age===''){V.err='注目馬名と年齢を入力してください';V.pre={...o,id:id||undefined};render();return false}
+ const h={name:o.name,att:o.att,sex:o.sex,age:+o.age,div:o.div,stable:o.stable,sire:o.sire,dam:o.dam,damsire:o.damsire,owner:o.owner,prize:+o.prize||0,memo:o.memo,
+  next:o.n_name.trim()?{name:o.n_name,place:o.n_place,surf:o.n_surf,dist:o.n_dist,status:o.n_status,cls:o.n_cls,date:o.n_date,rid:o.n_rid}:null,
+  };
+ if(id)Object.assign(S.horses.find(x=>x.id===id),h);else S.horses.push({id:uid(),...h});
+ V.err='';V.pre={};save();history.back();return false}
+function delHorse(id){if(confirm('この注目馬を削除しますか？')){S.horses=S.horses.filter(x=>x.id!==id);save();location.hash='horses'}}
+/* settings */
+function settings(){return `<h1>設定</h1><h2>カラーテーマ</h2><input type="color" value="${S.set.color}" style="height:48px" onchange="S.set.color=this.value;save();render()">
+ <h2>文字サイズ</h2><div class="tabs">${['小','標準','大'].map(s=>`<button class="${S.set.size===s?'on':''}" onclick="S.set.size='${s}';save();render()">${s}</button>`).join('')}</div>
+ <h2>データ管理</h2><button class="btn w" onclick="exp()">データをエクスポート（JSON）</button>
+ <label>インポート</label><select id="im"><option value="add">既存データに追加</option><option value="over">既存データを上書き</option></select><input type="file" accept=".json" onchange="imp(this)">
+ <button class="btn d w" style="margin-top:16px" onclick="wipe()">全データを削除</button>`}
+function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='umalog-'+today()+'.json';a.click()}
+function imp(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.races)||!Array.isArray(d.horses))throw 0;
+ if($('#im').value==='over'){if(!confirm('既存データを上書きします。よろしいですか？'))return;S={...S,...d,set:d.set||S.set}}
+ else{['races','horses','stables','meets'].forEach(k=>(d[k]||[]).forEach?.(x=>{if(!S[k].some(y=>y.id===x.id))S[k].push(x)}));(d.venues||[]).forEach(v=>{if(!S.venues.includes(v))S.venues.push(v)})}
+ save();alert('インポートしました');render()}catch(e){alert('ファイルを読み込めませんでした')}};r.readAsText(f)}
+function wipe(){if(confirm('全てのデータを削除します。元に戻せません。')&&confirm('本当に削除しますか？')){S={races:[],horses:[],stables:[],meets:[],venues:[],set:{color:'#d32f2f',size:'標準'}};save();render()}}
+openDB().then(load).then(d=>{if(d)S={...S,...d};S.wv=S.wv||{};S.horses.forEach(h=>{if(!h.prevs){h.prevs=h.prev&&h.prev.name?[{id:uid(),...h.prev}]:[]}});render()});
+</script></body></html>
